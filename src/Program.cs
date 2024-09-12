@@ -9,17 +9,14 @@ builder.Services.AddDbContext<SchoolContext>(options =>
    options.UseNpgsql(builder.Configuration.GetConnectionString("SchoolContext")));
 
 var app = builder.Build();
-using (var scope = app.Services.CreateScope())
-{
+using (var scope = app.Services.CreateScope()) {
    var services = scope.ServiceProvider;
-   try
-   {
+   try {
        var context = services.GetRequiredService<SchoolContext>();
        var created = context.Database.EnsureCreated();
 
    }
-   catch (Exception ex)
-   {
+   catch (Exception ex) {
        var logger = services.GetRequiredService<ILogger<Program>>();
        logger.LogError(ex, "An error occurred creating the DB.");
    }
@@ -27,8 +24,7 @@ using (var scope = app.Services.CreateScope())
 
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
+if (!app.Environment.IsDevelopment()) {
     app.UseExceptionHandler("/Error");
 }
 app.UseStaticFiles();
